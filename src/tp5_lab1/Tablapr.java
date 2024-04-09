@@ -7,7 +7,7 @@ public class Tablapr extends javax.swing.JFrame {
 
     DefaultTableModel mt = new DefaultTableModel();
     ArrayList<Producto> productos = new ArrayList<>();
-
+    
     public Tablapr() {
         initComponents();
     }
@@ -23,7 +23,7 @@ public class Tablapr extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbCategoria = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -41,7 +41,7 @@ public class Tablapr extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "electronica", "alimento", "ropa", "lujo" }));
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "electronica", "alimento", "ropa", "lujo" }));
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,7 +94,7 @@ public class Tablapr extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(txtNombre)
                             .addGap(44, 44, 44))))
@@ -105,7 +105,7 @@ public class Tablapr extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -134,14 +134,21 @@ public class Tablapr extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        
+        String nombre = txtNombre.getText();
+        String categoria = (String) cbCategoria.getSelectedItem();
+        double precio = Double.parseDouble(txtPrecio.getText());
+        Producto p = new Producto(nombre, categoria, precio);
+        productos.add(p);
         limpiarTabla();
-        
-        
+        tblProductos.repaint();
+        mt.addRow(new Object[]{p.getNombre(),p.getCategoria(),p.getPrecio()+""});
+       
+       
         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -184,7 +191,7 @@ public class Tablapr extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
