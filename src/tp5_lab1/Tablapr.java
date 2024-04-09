@@ -1,13 +1,16 @@
 package tp5_lab1;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Tablapr extends javax.swing.JFrame {
 
     private DefaultTableModel mt = new DefaultTableModel();
     ArrayList<Producto> productos = new ArrayList<>();
-    
+
     public Tablapr() {
         initComponents();
 
@@ -40,6 +43,7 @@ public class Tablapr extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnAgregar.setIcon(new javax.swing.ImageIcon("D:\\edulopez\\Documentos Universidad\\ULP\\Laboratorio I\\EJERCICIOS\\TP_5\\tp5_lab1\\Imagenes\\agregar_32x32.png")); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,11 +72,18 @@ public class Tablapr extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblProductos.setEnabled(false);
         jScrollPane1.setViewportView(tblProductos);
 
         jLabel1.setText("Categoria");
 
         jLabel2.setText("Precio");
+
+        txtPrecio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPrecioMouseClicked(evt);
+            }
+        });
 
         jLabel3.setText("Nombre");
 
@@ -81,10 +92,6 @@ public class Tablapr extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAgregar)
-                .addGap(32, 32, 32))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -98,13 +105,18 @@ public class Tablapr extends javax.swing.JFrame {
                         .addComponent(jLabel2)))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(txtNombre)
-                            .addGap(44, 44, 44))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtNombre)
+                                .addGap(44, 44, 44)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,13 +129,16 @@ public class Tablapr extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addComponent(btnAgregar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(btnAgregar)))
+                .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -145,20 +160,34 @@ public class Tablapr extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
 
-        // TODO add your handling code here:
-        
         String nombre = txtNombre.getText();
         String categoria = (String) cbCategoria.getSelectedItem();
-        double precio = Double.parseDouble(txtPrecio.getText());
-        Producto p = new Producto(nombre, categoria, precio);
-        productos.add(p);
+        try {
+            double precio = Double.parseDouble(txtPrecio.getText());
+            Producto p = new Producto(nombre, categoria, precio);
+            productos.add(p);
+            System.out.println(p.getCategoria() + p.getNombre() + p.getPrecio());
+            mt.addRow(new Object[]{p.getNombre(), p.getCategoria(), p.getPrecio()});
+            limpiarCampos();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un precio numerico, idiota");
+            txtPrecio.requestFocus();
+            txtPrecio.setText("100.0");
+            txtPrecio.setForeground(Color.GRAY);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error general, idiota");
+            txtPrecio.requestFocus();
+        }
+
         
-        System.out.println(p.getCategoria()+p.getNombre()+p.getPrecio());
-        mt.addRow(new Object[]{p.getNombre(),p.getCategoria(),p.getPrecio()});
-        limpiarCampos();
 
 
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void txtPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPrecioMouseClicked
+        txtPrecio.setText("");
+        txtPrecio.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txtPrecioMouseClicked
 
     public static void main(String args[]) {
 
@@ -196,11 +225,18 @@ public class Tablapr extends javax.swing.JFrame {
             mt.removeRow(i);
         }
     }
-    public void limpiarCampos(){
-     txtPrecio.setText("");
+
+    public void limpiarCampos() {
+        txtPrecio.setText("");
         txtNombre.setText("");
     }
-    
+
+    public void verificarCampos() {
+        if (txtNombre.getText().isEmpty() && txtPrecio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos");
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
