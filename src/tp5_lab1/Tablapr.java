@@ -10,6 +10,10 @@ public class Tablapr extends javax.swing.JFrame {
 
     public Tablapr() {
         initComponents();
+        tblProductos.setModel(mt); // Establecemos el modelo en la tabla
+        mt.addColumn("Nombre");
+        mt.addColumn("Categoría");
+        mt.addColumn("Precio");
     }
 
     /**
@@ -23,7 +27,7 @@ public class Tablapr extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbCategoria = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -41,7 +45,7 @@ public class Tablapr extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "electronica", "alimento", "ropa", "lujo" }));
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "electronica", "alimento", "ropa", "lujo" }));
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,7 +98,7 @@ public class Tablapr extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(txtNombre)
                             .addGap(44, 44, 44))))
@@ -105,7 +109,7 @@ public class Tablapr extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -137,12 +141,19 @@ public class Tablapr extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-        
-        limpiarTabla();
-        
-        
-        
+        // Acá obtenemos los valores del formulario
+        String nombre = txtNombre.getText();
+        String categoria = (String) cbCategoria.getSelectedItem();
+        double precio = Double.parseDouble(txtPrecio.getText());
+
+        // Creamos un objeto Producto y agregarlo a la lista
+        Producto p = new Producto(nombre, categoria, precio);
+        productos.add(p);
+
+        // Agregamos la nueva fila al modelo de la tabla
+        mt.addRow(new Object[]{nombre, categoria, precio});
+
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     public static void main(String args[]) {
@@ -174,9 +185,9 @@ public class Tablapr extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void limpiarTabla(){
-        int filas = mt.getRowCount()-1;
+
+    public void limpiarTabla() {
+        int filas = mt.getRowCount() - 1;
         for (int i = filas; i >= 0; i--) {
             mt.removeRow(i);
         }
@@ -184,7 +195,7 @@ public class Tablapr extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
