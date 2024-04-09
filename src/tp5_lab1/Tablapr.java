@@ -155,7 +155,7 @@ public class Tablapr extends javax.swing.JFrame {
         
         System.out.println(p.getCategoria()+p.getNombre()+p.getPrecio());
         mt.addRow(new Object[]{p.getNombre(),p.getCategoria(),p.getPrecio()});
-        
+        limpiarCampos();
 
 
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -195,6 +195,10 @@ public class Tablapr extends javax.swing.JFrame {
         for (int i = filas; i >= 0; i--) {
             mt.removeRow(i);
         }
+    }
+    public void limpiarCampos(){
+     txtPrecio.setText("");
+        txtNombre.setText("");
     }
     
 
