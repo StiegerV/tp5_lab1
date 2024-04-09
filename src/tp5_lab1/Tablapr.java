@@ -10,10 +10,12 @@ public class Tablapr extends javax.swing.JFrame {
     
     public Tablapr() {
         initComponents();
+
         tblProductos.setModel(mt);
         mt.addColumn("Nombre");
         mt.addColumn("Categoria");
         mt.addColumn("precio");
+
     }
 
     /**
@@ -142,6 +144,7 @@ public class Tablapr extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+
         // TODO add your handling code here:
         
         String nombre = txtNombre.getText();
@@ -153,8 +156,8 @@ public class Tablapr extends javax.swing.JFrame {
         System.out.println(p.getCategoria()+p.getNombre()+p.getPrecio());
         mt.addRow(new Object[]{p.getNombre(),p.getCategoria(),p.getPrecio()});
         
-       
-        
+
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     public static void main(String args[]) {
@@ -186,9 +189,9 @@ public class Tablapr extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void limpiarTabla(){
-        int filas = mt.getRowCount()-1;
+
+    public void limpiarTabla() {
+        int filas = mt.getRowCount() - 1;
         for (int i = filas; i >= 0; i--) {
             mt.removeRow(i);
         }
