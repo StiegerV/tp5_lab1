@@ -5,11 +5,15 @@ import javax.swing.table.DefaultTableModel;
 
 public class Tablapr extends javax.swing.JFrame {
 
-    DefaultTableModel mt = new DefaultTableModel();
+    private DefaultTableModel mt = new DefaultTableModel();
     ArrayList<Producto> productos = new ArrayList<>();
     
     public Tablapr() {
         initComponents();
+        tblProductos.setModel(mt);
+        mt.addColumn("Nombre");
+        mt.addColumn("Categoria");
+        mt.addColumn("precio");
     }
 
     /**
@@ -139,15 +143,16 @@ public class Tablapr extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        
         String nombre = txtNombre.getText();
         String categoria = (String) cbCategoria.getSelectedItem();
         double precio = Double.parseDouble(txtPrecio.getText());
         Producto p = new Producto(nombre, categoria, precio);
         productos.add(p);
-        limpiarTabla();
-        tblProductos.repaint();
-        mt.addRow(new Object[]{p.getNombre(),p.getCategoria(),p.getPrecio()+""});
-       
+        
+        System.out.println(p.getCategoria()+p.getNombre()+p.getPrecio());
+        mt.addRow(new Object[]{p.getNombre(),p.getCategoria(),p.getPrecio()});
+        
        
         
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -188,6 +193,7 @@ public class Tablapr extends javax.swing.JFrame {
             mt.removeRow(i);
         }
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
